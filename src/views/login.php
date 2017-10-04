@@ -4,9 +4,18 @@
 $username = $password = '';
 $error = '';
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+if (!empty($_COOKIE['simplelogin_id']) && is_numeric($_COOKIE['simplelogin_id'])) {
+    $result = $db->query("SELECT * FROM user WHERE id = '{$_COOKIE['simplelogin_id']}'");
+    if ($user = $result->fetch_assoc()) {
+        $_SESSION['user'] = $user;
+        header('location: /');
+        exit();
+    }
+}
+
+if (!empty($_POST['login'])) {
     // Check if username is empty.
-    if(empty(trim($_POST['username'])) && empty($error)){
+    if (empty(trim($_POST['username'])) && empty($error)) {
         $error = 'Please enter username.';
     } else {
         $username = trim($_POST['username']);
@@ -25,14 +34,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($user = $result->fetch_assoc()) {
             if (password_verify($password, $user['password'])) {
                 if (!empty($_POST['remember-me'])) {
-                  setcookie('username',$_POST['username'],time() + (30 * 24 * 60 * 60));
-                  setcookie('password',$_POST['password'],time() + (30 * 24 * 60 * 60));
+                  setcookie('simplelogin_id', $user['id'],time() + (30 * 24 * 60 * 60));
                 } else {
-                  if (isset($_COOKIE['username'])) {
-                    setcookie('username','');
-                  }
-                  if (isset($_COOKIE['password'])) {
-                    setcookie('password','');
+                  if (isset($_COOKIE['simplelogin_id'])) {
+                    setcookie('simplelogin_id','');
                   }
                 }
                 $_SESSION['user'] = $user;
@@ -79,10 +84,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <input type="password" name="password" id="password" class="form-control" placeholder="Password" required>
         <div class="checkbox">
           <label>
-            <input type="checkbox" value="remember-me"> Remember me
+            <input type="checkbox" name="remember-me" value="true"> Remember me
           </label>
         </div>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+        <button class="btn btn-lg btn-primary btn-block" name="login" value="true" type="submit">Sign in</button>
       </form>
 
     </div>

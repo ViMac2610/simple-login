@@ -1,13 +1,13 @@
 <?php
 
-// Initialize the session
+// Initialize the session.
 session_start();
 
-// Unset all of the session variables
-$_SESSION = array();
+// Deleting cookie by setting expirty to past time.
+setcookie('simplelogin_id', '', time() - 3600);
 
 // Destroy the session.
 session_destroy();
 
-// Redirect to login page
+// Redirect to login page.
 header('location: /login');

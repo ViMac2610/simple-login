@@ -2,14 +2,14 @@
 
 session_start();
 
-require '../config/config.php';
+require_once '../config/config.php';
 
 $db = new mysqli($host, $username, $password);
 
 $installed = $db->select_db($dbname) && $db->query('DESCRIBE user') && $db->query('DESCRIBE item');
 
 if (!$installed) {
-    require '../views/install-required.php';
+    require_once '../views/install-required.php';
     exit();
 }
 
@@ -26,7 +26,7 @@ if (!$loggedin && $request_uri[0] !== '/login') {
 switch ($request_uri[0]) {
     // Home page
     case '/':
-        require '../views/home.php';
+        require_once '../views/home.php';
         break;
     // Install page
     case '/install':
@@ -34,7 +34,7 @@ switch ($request_uri[0]) {
             header('Location: /');
             exit();
         }
-        require '../views/install.php';
+        require_once '../views/install.php';
         break;
     // Login page
     case '/login':
@@ -42,15 +42,15 @@ switch ($request_uri[0]) {
             header('Location: /');
             exit();
         }
-        require '../views/login.php';
+        require_once '../views/login.php';
         break;
     // Logout page
     case '/logout':
-        require '../views/logout.php';
+        require_once '../views/logout.php';
         break;
     // Everything else
     default:
         header('HTTP/1.0 404 Not Found');
-        require '../views/404.php';
+        require_once '../views/404.php';
         break;
 }
