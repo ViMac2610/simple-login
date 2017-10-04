@@ -1,6 +1,26 @@
 <?php
+
+session_start();
+
+require '../config/config.php';
+
+$db = new mysqli($host, $username, $password);
+
+$installed = $db->select_db($dbname) && $db->query('DESCRIBE user') && $db->query('DESCRIBE item');
+
+if (!$installed) {
+    require '../views/install-required.php';
+    exit();
+}
+
+$loggedin = !empty($_SESSION['user']);
 // Grabs the URI and breaks it apart in case we have querystring stuff
 $request_uri = explode('?', $_SERVER['REQUEST_URI'], 2);
+
+if (!$loggedin && $request_uri[0] !== '/login') {
+    header('Location: /login');
+    exit();
+}
 
 // Route it up!
 switch ($request_uri[0]) {
@@ -10,10 +30,18 @@ switch ($request_uri[0]) {
         break;
     // Install page
     case '/install':
+        if ($installed) {
+            header('Location: /');
+            exit();
+        }
         require '../views/install.php';
         break;
     // Login page
     case '/login':
+        if ($loggedin) {
+            header('Location: /');
+            exit();
+        }
         require '../views/login.php';
         break;
     // Logout page

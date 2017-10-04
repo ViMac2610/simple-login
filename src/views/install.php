@@ -2,12 +2,6 @@
 
 echo 'Reinstalling...<br>';
 
-$host       = 'mysql';
-$username   = 'root';
-$password   = 'root';
-$dbname     = 'db';
-
-$db = new mysqli($host, $username, $password);
 // Check connection
 if ($db->connect_error) {
     die("Connection failed: {$db->connect_error}\n");

@@ -1,94 +1,90 @@
-<!DOCTYPE html>
+<?php
+
+// Define variables and initialize with empty values
+$username = $password = '';
+$error = '';
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Check if username is empty.
+    if(empty(trim($_POST['username'])) && empty($error)){
+        $error = 'Please enter username.';
+    } else {
+        $username = trim($_POST['username']);
+    }
+
+    // Check if password is empty.
+    if(empty(trim($_POST['password'])) && empty($error)){
+        $error = 'Please enter your password.';
+    } else {
+        $password = trim($_POST['password']);
+    }
+
+    if (empty($error)) {
+        $username = $db->escape_string($username);
+        $result = $db->query("SELECT * FROM user WHERE username = '{$username}'");
+        if ($user = $result->fetch_assoc()) {
+            if (password_verify($password, $user['password'])) {
+                if (!empty($_POST['remember-me'])) {
+                  setcookie('username',$_POST['username'],time() + (30 * 24 * 60 * 60));
+                  setcookie('password',$_POST['password'],time() + (30 * 24 * 60 * 60));
+                } else {
+                  if (isset($_COOKIE['username'])) {
+                    setcookie('username','');
+                  }
+                  if (isset($_COOKIE['password'])) {
+                    setcookie('password','');
+                  }
+                }
+                $_SESSION['user'] = $user;
+                header('location: /');
+                exit();
+            }
+            else {
+                $error = 'Invalid password';
+            }
+        } else {
+          $error = 'Invalid username';
+        }
+    }
+}
+
+?>
+
+<!doctype html>
 <html lang="en">
-<head>
-  <!-- Standard Meta -->
-  <meta charset="utf-8"/>
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="misc/favicon.ico">
+    <title>Login</title>
+    <link href="misc/bootstrap.css" rel="stylesheet">
+    <link href="misc/basic.css" rel="stylesheet">
+    <link href="misc/login.css" rel="stylesheet">
+  </head>
 
-  <!-- Site Properties -->
-  <title>Bootstrap 4 Login Form</title>
+  <body>
 
-  <!-- Stylesheets -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
+    <div class="container">
+      <?php if (!empty($error)): ?>
+      <div class="alert alert-danger"><?php print $error; ?></div>
+      <?php endif; ?>
 
-  <!-- Bootstrap -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css"
-        integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"
-          integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1"
-          crossorigin="anonymous"></script>
-</head>
-<body>
-<div class="container">
-  <form class="form-horizontal" role="form" method="POST" action="/login">
-    <div class="row">
-      <div class="col-md-3"></div>
-      <div class="col-md-6">
-        <h2>Please Login</h2>
-        <hr>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-3"></div>
-      <div class="col-md-6">
-        <div class="form-group has-danger">
-          <label class="sr-only" for="email">E-Mail Address</label>
-          <div class="input-group mb-2 mr-sm-2 mb-sm-0">
-            <div class="input-group-addon" style="width: 2.6rem"><i class="fa fa-at"></i></div>
-            <input type="text" name="email" class="form-control" id="email"
-                   placeholder="you@example.com" required autofocus>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-3">
-        <div class="form-control-feedback">
-                        <span class="text-danger align-middle">
-                            <i class="fa fa-close"></i> Example error message
-                        </span>
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-3"></div>
-      <div class="col-md-6">
-        <div class="form-group">
-          <label class="sr-only" for="password">Password</label>
-          <div class="input-group mb-2 mr-sm-2 mb-sm-0">
-            <div class="input-group-addon" style="width: 2.6rem"><i class="fa fa-key"></i></div>
-            <input type="password" name="password" class="form-control" id="password"
-                   placeholder="Password" required>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-3">
-        <div class="form-control-feedback">
-                        <span class="text-danger align-middle">
-                        <!-- Put password error message here -->
-                        </span>
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-3"></div>
-      <div class="col-md-6" style="padding-top: .35rem">
-        <div class="form-check mb-2 mr-sm-2 mb-sm-0">
-          <label class="form-check-label">
-            <input class="form-check-input" name="remember"
-                   type="checkbox">
-            <span style="padding-bottom: .15rem">Remember me</span>
+      <form class="form-signin" action="/login" method="post">
+        <h2 class="form-signin-heading">Please sign in</h2>
+        <label for="username" class="sr-only">Username</label>
+        <input type="text" name="username" id="username" class="form-control" placeholder="Username" required autofocus>
+        <label for="password" class="sr-only">Password</label>
+        <input type="password" name="password" id="password" class="form-control" placeholder="Password" required>
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" value="remember-me"> Remember me
           </label>
         </div>
-      </div>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+      </form>
+
     </div>
-    <div class="row" style="padding-top: 1rem">
-      <div class="col-md-3"></div>
-      <div class="col-md-6">
-        <button type="submit" class="btn btn-success"><i class="fa fa-sign-in"></i> Login</button>
-        <a class="btn btn-link" href="/password/reset">Forgot Your Password?</a>
-      </div>
-    </div>
-  </form>
-</div>
-</body>
+  </body>
 </html>
