@@ -9,19 +9,21 @@
       <li class="nav-item <?php if ($page === 'home') { print 'active'; } ?>">
         <a class="nav-link" href="/">Home</a>
       </li>
-      <?php if (!$loggedin): ?>
+      <li class="nav-item <?php if ($page === 'install') { print 'active'; } ?>">
+        <a class="nav-link" href="/install">Install</a>
+      </li>
+      <?php if ($loggedin): ?>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" id="user-menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?= $_SESSION['user']['username'] ?></a>
+        <div class="dropdown-menu" aria-labelledby="user-menu">
+          <a class="dropdown-item" href="/logout">Logout</a>
+        </div>
+      </li>
+      <?php else: ?>
       <li class="nav-item <?php if ($page === 'login') { print 'active'; } ?>">
         <a class="nav-link" href="/login">Login</a>
       </li>
       <?php endif; ?>
-      <?php if ($loggedin): ?>
-      <li class="nav-item <?php if ($page === 'logout') { print 'active'; } ?>">
-        <a class="nav-link" href="/logout">Logout</a>
-      </li>
-      <?php endif; ?>
-      <li class="nav-item <?php if ($page === 'install') { print 'active'; } ?>">
-        <a class="nav-link" href="/install">Install</a>
-      </li>
     </ul>
   </div>
 </nav>

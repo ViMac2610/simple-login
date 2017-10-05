@@ -73,5 +73,8 @@ if (empty($error) && !empty($_POST['delete'])) {
         <?php endif; ?>
       </div>
     </div>
+    <script src="misc/js/jquery.js"></script>
+    <script src="misc/js/popper.js"></script>
+    <script src="misc/js/bootstrap.js"></script>
   </body>
 </html>

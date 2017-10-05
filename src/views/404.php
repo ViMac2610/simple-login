@@ -22,5 +22,8 @@
       </div>
 
     </main>
+    <script src="misc/js/jquery.js"></script>
+    <script src="misc/js/popper.js"></script>
+    <script src="misc/js/bootstrap.js"></script>
   </body>
 </html>
