@@ -6,19 +6,14 @@ require_once '../config/config.php';
 
 $db = new mysqli($host, $username, $password);
 
+$loggedin = !empty($_SESSION['user']);
 $installed = $db->select_db($dbname) && $db->query('DESCRIBE user') && $db->query('DESCRIBE item');
 
-if (!$installed) {
-    require_once '../views/install-required.php';
-    exit();
-}
-
-$loggedin = !empty($_SESSION['user']);
 // Grabs the URI and breaks it apart in case we have querystring stuff
 $request_uri = explode('?', $_SERVER['REQUEST_URI'], 2);
 
-if (!$loggedin && $request_uri[0] !== '/login') {
-    header('Location: /login');
+if (!$installed && $request_uri[0] !== '/install') {
+    header('Location: /install');
     exit();
 }
 
@@ -26,14 +21,14 @@ if (!$loggedin && $request_uri[0] !== '/login') {
 switch ($request_uri[0]) {
     // Home page
     case '/':
+        if (!$loggedin) {
+            header('Location: /login');
+            exit();
+        }
         require_once '../views/home.php';
         break;
     // Install page
     case '/install':
-        if ($_SESSION['user']['role'] !== 'admin') {
-            header('Location: /');
-            exit();
-        }
         require_once '../views/install.php';
         break;
     // Login page
@@ -46,6 +41,10 @@ switch ($request_uri[0]) {
         break;
     // Logout page
     case '/logout':
+        if (!$loggedin) {
+            header('Location: /login');
+            exit();
+        }
         require_once '../views/logout.php';
         break;
     // Everything else
