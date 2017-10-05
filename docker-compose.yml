@@ -22,3 +22,5 @@ services:
             - './src:/simple-login'
         links:
             - mysql
+        environment:
+            SECRET_KEY: 6YENpJ5pyq

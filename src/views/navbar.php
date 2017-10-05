@@ -19,6 +19,9 @@
         <a class="nav-link" href="/logout">Logout</a>
       </li>
       <?php endif; ?>
+      <li class="nav-item <?php if ($page === 'install') { print 'active'; } ?>">
+        <a class="nav-link" href="/install">Install</a>
+      </li>
     </ul>
   </div>
 </nav>

@@ -60,7 +60,7 @@ if (empty($error) && !empty($_POST['delete'])) {
         <div class="alert alert-success"><?php print $message; ?></div>
         <?php endif; ?>
 
-        <?php if ($deleted): ?>
+        <?php if (!empty($error) || !empty($message)): ?>
         <p><a href="/" class="btn btn-primary"><i class="fa fa-home"></i> Take Me Home</a></p>
         <?php endif; ?>
 

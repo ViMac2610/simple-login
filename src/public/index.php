@@ -17,6 +17,8 @@ if (!$installed && $request_uri[0] !== '/install') {
     exit();
 }
 
+$page = '';
+
 // Route it up!
 switch ($request_uri[0]) {
     // Home page
@@ -25,10 +27,12 @@ switch ($request_uri[0]) {
             header('Location: /login');
             exit();
         }
+        $page = 'home';
         require_once '../views/home.php';
         break;
     // Install page
     case '/install':
+        $page = 'install';
         require_once '../views/install.php';
         break;
     // Login page
@@ -37,6 +41,7 @@ switch ($request_uri[0]) {
             header('Location: /');
             exit();
         }
+        $page = 'login';
         require_once '../views/login.php';
         break;
     // Logout page
@@ -45,6 +50,7 @@ switch ($request_uri[0]) {
             header('Location: /login');
             exit();
         }
+        $page = 'logout';
         require_once '../views/logout.php';
         break;
     // Delete page
@@ -53,11 +59,13 @@ switch ($request_uri[0]) {
             header('Location: /login');
             exit();
         }
+        $page = 'delete';
         require_once '../views/delete.php';
         break;
     // Everything else
     default:
         header('HTTP/1.0 404 Not Found');
+        $page = '404';
         require_once '../views/404.php';
         break;
 }
