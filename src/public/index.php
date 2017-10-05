@@ -30,7 +30,7 @@ switch ($request_uri[0]) {
         break;
     // Install page
     case '/install':
-        if ($installed) {
+        if ($_SESSION['user']['role'] !== 'admin') {
             header('Location: /');
             exit();
         }

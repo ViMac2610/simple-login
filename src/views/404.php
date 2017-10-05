@@ -2,10 +2,10 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <link rel="icon" href="../misc/favicon.ico">
+    <link rel="icon" href="misc/img/favicon.ico">
     <title>Page Not Found</title>
-    <link href="../misc/bootstrap.css" rel="stylesheet">
-    <link href="../misc/basic.css" rel="stylesheet">
+    <link href="misc/css/bootstrap.css" rel="stylesheet">
+    <link href="misc/css/basic.css" rel="stylesheet">
   </head>
 
   <body>

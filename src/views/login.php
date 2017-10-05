@@ -62,11 +62,11 @@ if (!empty($_POST['login'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="misc/favicon.ico">
+    <link rel="icon" href="misc/img/favicon.ico">
     <title>Login</title>
-    <link href="misc/bootstrap.css" rel="stylesheet">
-    <link href="misc/basic.css" rel="stylesheet">
-    <link href="misc/login.css" rel="stylesheet">
+    <link href="misc/css/bootstrap.css" rel="stylesheet">
+    <link href="misc/css/basic.css" rel="stylesheet">
+    <link href="misc/css/login.css" rel="stylesheet">
   </head>
 
   <body>

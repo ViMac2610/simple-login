@@ -52,6 +52,7 @@ if ($db->select_db($dbname)) {
         $sql = "CREATE TABLE item (
             id int(11) NOT NULL AUTO_INCREMENT,
             name varchar(255) NOT NULL,
+            title varchar(255) NOT NULL,
             PRIMARY KEY (id)
         )";
 
@@ -62,15 +63,20 @@ if ($db->select_db($dbname)) {
         }
 
         // Create items.
-        $sql = "INSERT INTO item (name) VALUES
-            ('Book'),
-            ('T-Shirt'),
-            ('Chair'),
-            ('Table'),
-            ('Laptop'),
-            ('Bottle'),
-            ('I-Phone'),
-            ('Refrigerator')";
+        $sql = "INSERT INTO item (name, title) VALUES
+            ('phone', 'Phone'),
+            ('monitor', 'Monitor'),
+            ('scanner', 'Scanner'),
+            ('printer-laser', 'Printer Laser'),
+            ('floppy-disk', 'Floppy Disk'),
+            ('optical-disk', 'Optical Disk'),
+            ('hard-disk', 'Hard Disk'),
+            ('webcam', 'Webcam'),
+            ('audio-headset', 'Audio Headset'),
+            ('camera-video', 'Camera Video'),
+            ('mp3-player', 'Mp3 Player'),
+            ('mouse', 'Mouse'),
+            ('gamepad', 'Gamepad')";
 
         if ($db->query($sql) === TRUE) {
             echo 'New items created successfully<br>';
