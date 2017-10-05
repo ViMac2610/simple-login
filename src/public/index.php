@@ -47,6 +47,14 @@ switch ($request_uri[0]) {
         }
         require_once '../views/logout.php';
         break;
+    // Delete page
+    case '/delete':
+        if (!$loggedin) {
+            header('Location: /login');
+            exit();
+        }
+        require_once '../views/delete.php';
+        break;
     // Everything else
     default:
         header('HTTP/1.0 404 Not Found');

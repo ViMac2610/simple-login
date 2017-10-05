@@ -15,7 +15,7 @@
 
     <main role="main" class="container">
 
-      <div class="content">
+      <div class="content page-not-found">
         <h1>Page Not Found</h1>
         <p>Sorry, an error has occured, Requested page not found!</p>
         <p><a href="/" class="btn btn-primary"><i class="fa fa-home"></i> Take Me Home</a></p>

@@ -3,5 +3,7 @@ body {
 }
 .content {
   padding: 3rem 1.5rem;
+}
+.page-not-found {
   text-align: center;
 }

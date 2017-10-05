@@ -121,7 +121,7 @@ if (!empty($_POST['install'])) {
             <p>System is not installed, click here to install <input type="submit" class="btn btn-primary" name="install" value="Install"></input></p>
           <?php endif; ?>
           <?php if ($installed): ?>
-            <p>System is installed, click here to fully re-install <input type="submit" class="btn btn-primary" name="install" value="Re-Install"></input> or back to homepage <a href="/" class="btn btn-primary"><i class="fa fa-home"></i> Homepage</a></p>
+            <p>System is installed, click here to fully re-install <input type="submit" class="btn btn-primary" name="install" value="Re-Install"></input> or <a href="/" class="btn btn-primary"><i class="fa fa-home"></i> Take Me Home</a></p>
           <?php endif; ?>
         </form>
       </div>

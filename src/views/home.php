@@ -13,8 +13,6 @@
 
     <div class="container">
       <div class="content">
-        <div class="alert alert-success">You have been <strong>successfully logged in</strong>.</div>
-        <a href="/logout" class="btn btn-default btn-lg btn-block">Logout</a>
         <?php include 'items.php'; ?>
       </div>
     </div>
